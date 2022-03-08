@@ -1,0 +1,14 @@
+{% block body %}
+	<h3>Company {{user.company.companyName}}'s Report:</h3>
+	<div>
+		Feedback Rating: {{user.company.feedbackRating}}
+	</div>
+	<div>
+		Feedback Text: {{user.company.feedbackText}}
+	</div>
+	<h3>
+		<a href = "{{url_for('userLogout')}}">
+			Logout
+		</a>
+	</h3>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% block body %}
+	{% block tophome %} {% endblock %}
+	<h3>
+		You are at Home
+	</h3>
+	<h3>
+		<a href = "{{url_for('userCreation')}}">
+			Create A Client User
+		</a>
+	</h3>
+	<h3>
+		<a href = "{{url_for('addReport')}}">
+			Add Reports for a Company
+		</a>
+	</h3>
+	<h3>
+		<a href = "{{url_for('viewReport')}}">
+			View Reports of your Company
+		</a>
+	</h3>
+	<h3>
+		<a href = "{{url_for('userLogin')}}">
+			User Login
+		</a>
+	</h3>
+	<h3>
+		<a href = "{{url_for('userChangePassword')}}">
+			User Password Change
+		</a>
+	</h3>
+{% endblock %}

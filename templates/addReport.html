@@ -1,0 +1,22 @@
+{% block body %}
+	<h1>Add Report</h1>
+	<form method="POST" action="/addReport">
+		<select name="companyName">
+			<option disabled selected value = "Company Name">Company Name</option>
+			{% for company in companys %}
+				<option value = "{{company.companyName}}">{{company.companyName}}</option>
+			{% endfor %}
+		</select>
+		<select name="feedbackRating">
+			<option disabled selected value = "Feedback Rating">Feedback Rating</option>
+			{% for i in range(6) %}
+				<option value = "{{i}}">{{i}}</option>
+			{% endfor %}
+		</select>
+		<input type="textarea" name="feedbackText" placeholder="Feedback Text"/>
+		<input type="submit" value="Submit" />
+		<a href = "/">
+			Create New Company Profile if Company not in DropDown List
+		</a>
+	</form>
+{% endblock %}
