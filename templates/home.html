@@ -13,4 +13,22 @@
 			View Reports of your Company
 		</a>
 	</h3>
+	<h3>
+		<a href = "{{url_for('companyCreation')}}">
+			Admin: Create a New Company
+		</a>
+	</h3>
+	<h3>
+		<a href = "{{url_for('userManagerCreation')}}">
+			Admin: Create a Manager User
+		</a>
+	</h3>
+	<h3>
+		<a href = "{{url_for('userViewerCreation')}}">
+			Admin: Create a Viewer User
+		</a>
+	</h3>
+	<div class='col-md-4'>
+			{% include 'sidebar.html' %}
+	</div>
 {% endblock %}

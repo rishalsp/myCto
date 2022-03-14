@@ -1,9 +1,8 @@
 {% block body %}
-	<h1>Register</h1>
+	<h1>Create a New Company</h1>
 	<form method="POST" action="/companyCreation">
-		<input type="text" name="companyName" placeholder="Company Name"/>
-		<input type="text" name="pocName" placeholder="Company POC Name"/>
-		<input type="text" name="phone" placeholder="Company Phone"/>
+		<input type="text" name="name" placeholder="Company Name"/>
+		<input type="text" name="email" placeholder="Company Email"/>
 		<input type="submit" value="Submit" />
 	</form>
 {% endblock %}

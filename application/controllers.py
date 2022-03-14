@@ -8,10 +8,53 @@ from application.models import *
 @app.before_first_request
 def create_user():
     db.create_all()
-    if not user_datastore.find_user(email="test@me.com"):
-        user_datastore.create_user(email="test@me.com", password=hash_password("password"), roles=['viewer', 'manager'])
+    if not user_datastore.find_user(email="testadmin@admin.com"):
+        user_datastore.create_user(username='testadmin', email="testadmin@admin.com", password=hash_password("password"), roles=['admin'])
     db.session.commit()
 
+@app.route('/userManagerCreation', methods=['GET', 'POST'])
+@roles_required('admin')
+def userManagerCreation():
+    if request.method=="GET":
+        allCompanys = Company.query.all()
+        return render_template("userManagerCreation.html", companys=allCompanys)
+    if request.method=="POST": 
+        username = request.form.get("username")
+        password = request.form.get("password")
+        email = request.form.get("email")
+        companys = request.form.getlist('companyList')
+        user_datastore.create_user(username=username, email=email, password=password, roles=['manager'], companys=[str(company) for company in companys])
+        db.session.commit()
+        return render_template('home.html')
+        
+@app.route('/userViewerCreation', methods=['GET', 'POST'])
+@roles_required('admin')
+def userViewerCreation():
+    if request.method=="GET":
+        allCompanys = Company.query.all()
+        return render_template("userViewerCreation.html", companys=allCompanys)
+    if request.method=="POST": 
+        username = request.form.get("username")
+        password = request.form.get("password")
+        email = request.form.get("email")
+        companys = request.form.getlist('companyList')
+        user_datastore.create_user(username=username, email=email, password=password, roles=['viewer'], companys=[str(company) for company in companys])
+        db.session.commit()
+        return render_template('home.html')
+        
+@app.route('/companyCreation', methods=['GET', 'POST'])
+@roles_required('admin')
+def companyCreation():
+    if request.method=="GET":
+        return render_template("companyCreation.html")
+    if request.method=="POST": 
+        name = request.form.get("name")
+        email = request.form.get("email")
+        newCompany = Company(name, email)
+        db.session.add(newCompany)
+        db.session.commit()
+        return render_template('home.html')
+        
 @app.route('/addReport', methods=['GET','POST'])
 @roles_required('manager')
 def addReport():
@@ -36,23 +79,6 @@ def addReport():
 def viewReport():
     return render_template('viewReport.html', user = current_user)
 
-
-'''
-@app.route('/userChangePassword', methods=['POST', 'GET'])
-def userChangePassword():
-    if request.method=='GET':
-        return render_template('userChangePassword.html')
-    if request.method=='POST':
-        clientEmail = request.form.get("clientEmail")
-        oldPassword = request.form.get("oldPassword")
-        newPassword = request.form.get("newPassword")
-        user = User.query.filter_by(email=clientEmail).first()
-        if oldPassword==newPassword:
-            pass
-        if user is not None and user.checkPassword(oldPassword) and oldPassword!=newPassword:
-            user.setPassword(newPassword)
-            return render_template('userChangePasswordSuccess.html')
-'''            
 @app.route('/')
 @auth_required()
 def home():

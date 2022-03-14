@@ -1,0 +1,18 @@
+{% block body %}
+	<h1>Register a New Manager User</h1>
+	<form method="POST" action="/userManagerCreation">
+		<select id='companyList' name="companys" multiple class='form-control'>
+			<option disabled selected value = "Company Name">Company Name</option>
+			{% for company in companys %}
+				<option value = "{{company.name}}">{{company.name}}</option>
+			{% endfor %}
+		</select>
+		<input type="text" name="username" placeholder="Username"/>
+		<input type="text" name="email" placeholder="Email"/>
+		<input type="text" name="password" placeholder="Password"/>
+		<input type="submit" value="Submit" />
+		<a href = "{{url_for('companyCreation')}}">
+			Create New Company Profile if Company not in DropDown List
+		</a>
+	</form>
+{% endblock %}
